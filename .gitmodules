@@ -1,0 +1,12 @@
+[submodule "co-checkout-service"]
+	path = co-checkout-service
+	url = https://github.com/josuku/co-checkout-service
+[submodule "co-bill-service"]
+	path = co-bill-service
+	url = https://github.com/josuku/co-bill-service
+[submodule "co-logistic-service"]
+	path = co-logistic-service
+	url = https://github.com/josuku/co-logistic-service
+[submodule "co-client"]
+	path = co-client
+	url = https://github.com/josuku/co-client
