@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+  co-client: 
+    container_name: co-client
+    build: './co-client'
+    ports: 
+      - 80:80
+    depends_on:
+      - co-checkout-service
+  co-checkout-service: 
+    container_name: co-checkout-service
+    build: './co-checkout-service'
+    ports: 
+      - 3001:3001
+    depends_on:
+      - co-bill-service
+      - co-logistic-service
+  co-bill-service: 
+    container_name: co-bill-service
+    build: './co-bill-service'
+    ports: 
+      - 3002:3002
+  co-logistic-service: 
+    container_name: co-logistic-service
+    build: './co-logistic-service'
+    ports: 
+      - 3003:3003
