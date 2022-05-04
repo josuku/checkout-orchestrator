@@ -15,13 +15,26 @@ services:
     depends_on:
       - co-bill-service
       - co-logistic-service
+    environment:
+      - HOST=co-checkout-service
+      - PORT=3001
+      - BILL_HOST=co-bill-service
+      - BILL_PORT=3002
+      - LOGISTIC_HOST=co-logistic-service
+      - LOGISTIC_PORT=3003
   co-bill-service: 
     container_name: co-bill-service
     build: './co-bill-service'
     ports: 
       - 3002:3002
+    environment:
+      - HOST=co-bill-service
+      - PORT=3002
   co-logistic-service: 
     container_name: co-logistic-service
     build: './co-logistic-service'
     ports: 
       - 3003:3003
+    environment:
+      - HOST=co-logistic-service
+      - PORT=3003
