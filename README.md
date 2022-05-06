@@ -26,6 +26,8 @@ The solution is partitioned in several projects:
 
 - co-logistic-service: microservice implemented in NestJS as microservice. It also uses the request-response message style. It creates a sent order.
 
+- co-order-service: hybrid application with microservive and API, build in NestJS. Order management
+
 ## Exposed Services
 
 - co-client can be accesed on: http://localhost:80
@@ -36,3 +38,4 @@ The solution is partitioned in several projects:
 
 - co-logistic-service NestJS microservice uses port 3003
 
+- co-order-service NestJS microservice uses port 3004 and API service uses port 3005
