@@ -1,5 +1,6 @@
 version: '3.3'
 services:
+
   co-client: 
     container_name: co-client
     build: './co-client'
@@ -7,15 +8,25 @@ services:
       - 80:80
     depends_on:
       - co-checkout-service
+
   co-checkout-service: 
     container_name: co-checkout-service
     build: './co-checkout-service'
     ports: 
       - 3001:3001
-    depends_on:
+    links: 
       - co-bill-service
       - co-logistic-service
       - co-order-service
+    depends_on:
+      # co-bill-service:
+      #   condition: service_healthy
+      # co-logistic-service:
+      #   condition: service_healthy
+      # co-order-service:
+      #   condition: service_healthy
+      mysql:
+        condition: service_healthy
     environment:
       - HOST=co-checkout-service
       - PORT=3001
@@ -25,6 +36,7 @@ services:
       - LOGISTIC_MS_PORT=3003
       - ORDER_MS_HOST=co-order-service
       - ORDER_MS_PORT=3004
+
   co-bill-service: 
     container_name: co-bill-service
     build: './co-bill-service'
@@ -33,6 +45,7 @@ services:
     environment:
       - HOST=co-bill-service
       - PORT=3002
+
   co-logistic-service: 
     container_name: co-logistic-service
     build: './co-logistic-service'
@@ -41,6 +54,7 @@ services:
     environment:
       - HOST=co-logistic-service
       - PORT=3003
+
   co-order-service: 
     container_name: co-order-service
     build: './co-order-service'
@@ -51,3 +65,32 @@ services:
       - HOST=co-order-service
       - MS_PORT=3004
       - API_PORT=3005
+
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: $$secret
+      MYSQL_DATABASE: checkoutdb
+      MYSQL_USER: checkout
+      MYSQL_PASSWORD: $$secret
+    volumes:
+      - "./docker/mysql/01.schema.sql:/docker-entrypoint-initdb.d/1.sql"
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      interval: 5s
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8082:80
