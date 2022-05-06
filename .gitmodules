@@ -10,3 +10,6 @@
 [submodule "co-client"]
 	path = co-client
 	url = https://github.com/josuku/co-client
+[submodule "co-order-service"]
+	path = co-order-service
+	url = https://github.com/josuku/co-order-service
