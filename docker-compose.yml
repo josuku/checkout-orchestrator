@@ -19,12 +19,6 @@ services:
       - co-logistic-service
       - co-order-service
     depends_on:
-      # co-bill-service:
-      #   condition: service_healthy
-      # co-logistic-service:
-      #   condition: service_healthy
-      # co-order-service:
-      #   condition: service_healthy
       mysql:
         condition: service_healthy
     environment:
@@ -54,6 +48,11 @@ services:
     environment:
       - HOST=co-logistic-service
       - PORT=3003
+      - SQL_HOST=localhost
+      - SQL_PORT=3006
+      - SQL_USER=checkout
+      - SQL_PASSWORD=$$secret
+      - SQL_DB=checkoutdb
 
   co-order-service: 
     container_name: co-order-service
@@ -65,6 +64,11 @@ services:
       - HOST=co-order-service
       - MS_PORT=3004
       - API_PORT=3005
+      - SQL_HOST=localhost
+      - SQL_PORT=3006
+      - SQL_USER=checkout
+      - SQL_PASSWORD=$$secret
+      - SQL_DB=checkoutdb
 
   mysql:
     container_name: mysql

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mysql:3306
--- Tiempo de generación: 06-05-2022 a las 23:03:27
+-- Tiempo de generación: 07-05-2022 a las 21:53:47
 -- Versión del servidor: 5.7.38
 -- Versión de PHP: 8.0.15
 
@@ -41,10 +41,10 @@ CREATE TABLE `logistic` (
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `clientId` int(11) NOT NULL,
-  `date` int(11) NOT NULL,
-  `direction` varchar(100) NOT NULL,
-  `total` decimal(10,2) NOT NULL,
-  `confirmed` tinyint(4) NOT NULL
+  `date` datetime NOT NULL,
+  `direction` varchar(255) NOT NULL,
+  `total` int(11) NOT NULL DEFAULT '0',
+  `confirmed` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -53,8 +53,9 @@ CREATE TABLE `orders` (
 -- Estructura de tabla para la tabla `products`
 --
 
-CREATE TABLE `products` (
+CREATE TABLE `orderproducts` (
   `id` int(11) NOT NULL,
+  `orderid` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
   `orderId` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
@@ -99,7 +100,7 @@ ALTER TABLE `logistic`
 -- AUTO_INCREMENT de la tabla `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
