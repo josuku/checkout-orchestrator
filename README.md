@@ -6,6 +6,8 @@ Requirements:
 - Node Package Manager
 - Docker with Docker-Compose
 
+Implemented in NestJS and Angular to use the same language in front and back
+
 ## Running the app
 
 Install Docker Desktop if you do not have it. Run the following command on a terminal to start-up the system:
@@ -16,6 +18,7 @@ $ docker-compose up
 ## Solution Description
 
 The solution is partitioned in several projects:
+
 - checkout-orchestrator: Contains the docker-compose.yml file to orchestrate the solution in Docker. Next projects are added as submodules.
 
 - co-client: Basic client in Angular to send and receive data to and from the microservices, using the public API.
@@ -39,3 +42,7 @@ The solution is partitioned in several projects:
 - co-logistic-service NestJS microservice uses port 3003
 
 - co-order-service NestJS microservice uses port 3004 and API service uses port 3005
+
+## Third party services
+
+Application uses MySql container with PhpMyAdmin container to store and access the info
