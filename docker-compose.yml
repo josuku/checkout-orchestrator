@@ -19,7 +19,7 @@ services:
       - co-logistic-service
       - co-order-service
     depends_on:
-      mysql:
+      co-mysql:
         condition: service_healthy
     environment:
       - HOST=co-checkout-service
@@ -45,11 +45,14 @@ services:
     build: './co-logistic-service'
     ports: 
       - 3003:3003
+    depends_on:
+      co-mysql:
+        condition: service_healthy
     environment:
       - HOST=co-logistic-service
       - PORT=3003
-      - SQL_HOST=localhost
-      - SQL_PORT=3006
+      - SQL_HOST=co-mysql
+      - SQL_PORT=3306
       - SQL_USER=checkout
       - SQL_PASSWORD=$$secret
       - SQL_DB=checkoutdb
@@ -60,18 +63,21 @@ services:
     ports: 
       - 3004:3004
       - 3005:3005
+    depends_on:
+      co-mysql:
+        condition: service_healthy
     environment:
       - HOST=co-order-service
       - MS_PORT=3004
       - API_PORT=3005
-      - SQL_HOST=localhost
-      - SQL_PORT=3006
+      - SQL_HOST=co-mysql
+      - SQL_PORT=3306
       - SQL_USER=checkout
       - SQL_PASSWORD=$$secret
       - SQL_DB=checkoutdb
 
-  mysql:
-    container_name: mysql
+  co-mysql:
+    container_name: co-mysql
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: $$secret
@@ -86,13 +92,13 @@ services:
       test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
       interval: 5s
 
-  phpmyadmin:
-    container_name: phpmyadmin
+  co-phpmyadmin:
+    container_name: co-phpmyadmin
     image: phpmyadmin/phpmyadmin
     links:
-      - mysql
+      - co-mysql
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: co-mysql
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     restart: always

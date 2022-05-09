@@ -50,12 +50,11 @@ CREATE TABLE `orders` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `products`
+-- Estructura de tabla para la tabla `orderproducts`
 --
 
 CREATE TABLE `orderproducts` (
   `id` int(11) NOT NULL,
-  `orderid` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
   `orderId` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
@@ -80,9 +79,9 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `products`
+-- Indices de la tabla `orderproducts`
 --
-ALTER TABLE `products`
+ALTER TABLE `orderproducts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `orderId` (`orderId`);
 
@@ -103,9 +102,9 @@ ALTER TABLE `orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `products`
+-- AUTO_INCREMENT de la tabla `orderproducts`
 --
-ALTER TABLE `products`
+ALTER TABLE `orderproducts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -119,9 +118,9 @@ ALTER TABLE `logistic`
   ADD CONSTRAINT `logistic_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`);
 
 --
--- Filtros para la tabla `products`
+-- Filtros para la tabla `orderproducts`
 --
-ALTER TABLE `products`
+ALTER TABLE `orderproducts`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`);
 COMMIT;
 

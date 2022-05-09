@@ -10,6 +10,11 @@ Implemented in NestJS and Angular to use the same language in front and back
 
 ## Running the app
 
+First time you need to download submodules:
+```bash
+$ git submodule update --init
+```
+
 Install Docker Desktop if you do not have it. Run the following command on a terminal to start-up the system:
 ```bash
 $ docker-compose up
